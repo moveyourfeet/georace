@@ -1,2 +1,3 @@
 drop_column("waypoints", "latitude")
 drop_column("waypoints", "longitude")
+drop_column("waypoints", "sequence")

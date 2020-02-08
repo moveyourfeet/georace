@@ -20,6 +20,7 @@ type Waypoint struct {
 	Question  nulls.String  `json:"question" db:"question"`
 	Answer    nulls.String  `json:"answer" db:"answer"`
 	Point     nulls.Int     `json:"point" db:"point"`
+	Sequence  int64         `json:"sequence" db:"sequence"`
 	Zoom      nulls.Float64 `json:"zoom" db:"zoom"`
 	Latitude  float64       `json:"latitude" db:"latitude"`
 	Longitude float64       `json:"longitude" db:"longitude"`
