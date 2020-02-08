@@ -51,7 +51,7 @@ func App() *buffalo.App {
 			app.PreWares = []buffalo.PreWare{cors.New(cors.Options{
 				AllowedOrigins:   []string{"*"},
 				AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
-				AllowedHeaders:   []string{"Content-Type", "Cookie"},
+				AllowedHeaders:   []string{"Content-Type", "Cookie", "Authorization"},
 				AllowCredentials: true,
 				Debug:            true,
 			}).Handler}
