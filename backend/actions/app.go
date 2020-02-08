@@ -1,8 +1,6 @@
 package actions
 
 import (
-	"net/http"
-
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/envy"
 	forcessl "github.com/gobuffalo/mw-forcessl"
@@ -41,25 +39,23 @@ var T *i18n.Translator
 // declared after it to never be called.
 func App() *buffalo.App {
 
-	c := cors.Default().Handler
-
-	if ENV == "development" {
-		c = cors.New(cors.Options{
-			AllowedOrigins:   []string{"localhost:4200"},
-			AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodDelete},
-			AllowCredentials: true,
-		}).Handler
-	}
-
 	if app == nil {
 		app = buffalo.New(buffalo.Options{
 			Env:          ENV,
 			SessionStore: sessions.Null{},
-			PreWares: []buffalo.PreWare{
-				c,
-			},
+
 			SessionName: "_backend_session",
 		})
+
+		if ENV == "development" {
+			app.PreWares = []buffalo.PreWare{cors.New(cors.Options{
+				AllowedOrigins:   []string{"*"},
+				AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
+				AllowedHeaders:   []string{"Content-Type", "Cookie"},
+				AllowCredentials: true,
+				Debug:            true,
+			}).Handler}
+		}
 
 		// Automatically redirect to SSL
 		app.Use(forceSSL())
