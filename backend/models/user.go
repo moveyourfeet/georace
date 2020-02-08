@@ -5,6 +5,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/badoux/checkmail"
 	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/validate"
 	"github.com/gobuffalo/validate/validators"
@@ -29,6 +30,7 @@ type User struct {
 // running validations. Useful when writing tests.
 func (u *User) Create(tx *pop.Connection) (*validate.Errors, error) {
 	u.Email = strings.ToLower(u.Email)
+
 	ph, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return validate.NewErrors(), errors.WithStack(err)
@@ -75,6 +77,19 @@ func (u *User) Validate(tx *pop.Connection) (*validate.Errors, error) {
 					return false
 				}
 				return !b
+			},
+		},
+		// check to see if the email address is already taken:
+		&validators.FuncValidator{
+			Field:   u.Email,
+			Name:    "Email",
+			Message: "%s is not a valid email",
+			Fn: func() bool {
+				email := u.Email
+				if checkmail.ValidateFormat(email) != nil {
+					return false
+				}
+				return true
 			},
 		},
 	), err

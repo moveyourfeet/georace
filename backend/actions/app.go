@@ -4,6 +4,7 @@ import (
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/envy"
 	forcessl "github.com/gobuffalo/mw-forcessl"
+	i18n "github.com/gobuffalo/mw-i18n"
 	paramlogger "github.com/gobuffalo/mw-paramlogger"
 	"github.com/unrolled/secure"
 
@@ -19,6 +20,9 @@ import (
 // application is being run. Default is "development".
 var ENV = envy.Get("GO_ENV", "development")
 var app *buffalo.App
+
+// T supplies translations
+var T *i18n.Translator
 
 // App is where all routes and middleware for buffalo
 // should be defined. This is the nerve center of your
@@ -59,15 +63,18 @@ func App() *buffalo.App {
 		app.Use(popmw.Transaction(models.DB))
 
 		api := app.Group("/v1/")
+		api.Use(RestrictedHandlerMiddleware)
+
 		api.POST("users", UsersCreate)
 		api.POST("auth/login", UsersLogin)
 
 		users := api.Group("/users")
-		// restrict access to authenticated users
-		users.Use(RestrictedHandlerMiddleware)
 		users.GET("/me", UsersMe)
 
 		api.Resource("/waypoints", WaypointsResource{})
+		api.Resource("/routes", RoutesResource{})
+
+		api.Middleware.Skip(RestrictedHandlerMiddleware, UsersCreate, UsersLogin)
 	}
 
 	return app

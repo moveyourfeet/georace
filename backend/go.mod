@@ -6,11 +6,11 @@ require (
 	github.com/badoux/checkmail v0.0.0-20181210160741-9661bd69e9ad
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gobuffalo/buffalo v0.15.5
-	github.com/gobuffalo/buffalo-auth v1.3.0 // indirect
 	github.com/gobuffalo/buffalo-pop v1.23.1
 	github.com/gobuffalo/envy v1.9.0
 	github.com/gobuffalo/mw-contenttype v0.0.0-20190129203934-2554e742333b
 	github.com/gobuffalo/mw-forcessl v0.0.0-20180802152810-73921ae7a130
+	github.com/gobuffalo/mw-i18n v0.0.0-20190129204410-552713a3ebb4
 	github.com/gobuffalo/mw-paramlogger v0.0.0-20190129202837-395da1998525
 	github.com/gobuffalo/nulls v0.2.0
 	github.com/gobuffalo/packr/v2 v2.7.1

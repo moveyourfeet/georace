@@ -5,21 +5,24 @@ import (
 	"github.com/gobuffalo/nulls"
 	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/validate"
+	"github.com/gobuffalo/validate/validators"
 	"github.com/gofrs/uuid"
 	"time"
-	"github.com/gobuffalo/validate/validators"
 )
+
 // Waypoint is used by pop to map your .model.Name.Proper.Pluralize.Underscore database table to your go code.
 type Waypoint struct {
-    ID uuid.UUID `json:"id" db:"id"`
-    Name string `json:"name" db:"name"`
-    Question nulls.String `json:"question" db:"question"`
-    Answer nulls.String `json:"answer" db:"answer"`
-    Point nulls.Int `json:"point" db:"point"`
-    Zoom nulls.Float64 `json:"zoom" db:"zoom"`
-    Maptype nulls.String `json:"maptype" db:"maptype"`
-    CreatedAt time.Time `json:"created_at" db:"created_at"`
-    UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
+	ID        uuid.UUID     `json:"id" db:"id"`
+	RouteID   uuid.UUID     `json:"route_id" db:"route_id"`
+	Route     Route         `json:"-" belongs_to:"route"`
+	Name      string        `json:"name" db:"name"`
+	Question  nulls.String  `json:"question" db:"question"`
+	Answer    nulls.String  `json:"answer" db:"answer"`
+	Point     nulls.Int     `json:"point" db:"point"`
+	Zoom      nulls.Float64 `json:"zoom" db:"zoom"`
+	Maptype   nulls.String  `json:"maptype" db:"maptype"`
+	CreatedAt time.Time     `json:"created_at" db:"created_at"`
+	UpdatedAt time.Time     `json:"updated_at" db:"updated_at"`
 }
 
 // String is not required by pop and may be deleted

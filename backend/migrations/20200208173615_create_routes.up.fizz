@@ -1,0 +1,9 @@
+create_table("routes") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("name", "string", {})
+	t.Column("public", "bool", {})
+	t.Column("finish_message", "text", {null: true})
+	t.Timestamps()
+}
+
+add_column("waypoints", "route_id", "uuid")

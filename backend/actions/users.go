@@ -27,8 +27,6 @@ func UsersCreate(c buffalo.Context) error {
 		return errors.WithStack(err)
 	}
 
-	c.Logger().Infof("User pass: %v", u.Password)
-
 	user := &models.User{
 		Email:                u.Email,
 		Password:             u.Password,
@@ -48,11 +46,6 @@ func UsersCreate(c buffalo.Context) error {
 	}
 
 	c.Session().Set("current_user_id", user.ID)
-
-	// newUser, err := getUser(c, user.Email)
-	// if err != nil {
-	// 	return c.Error(404, err)
-	// }
 
 	return c.Render(200, r.JSON(user))
 }
@@ -86,14 +79,11 @@ func UsersLogin(c buffalo.Context) error {
 	u, err := getUser(c, email)
 
 	if err != nil {
-		c.Logger().Errorf("Error :%v", err)
 		return c.Error(http.StatusUnauthorized, errors.New("Login failed"))
 	}
 
 	pwdCompare := bcrypt.CompareHashAndPassword([]byte(u.PasswordHash), []byte(pwd))
 	if pwdCompare != nil {
-		c.Logger().Errorf("Error :%v", pwdCompare)
-
 		return c.Error(http.StatusUnauthorized, errors.New("Login failed"))
 	}
 
@@ -102,7 +92,6 @@ func UsersLogin(c buffalo.Context) error {
 		Issuer:    fmt.Sprintf("%s.api.go-with-jwt.it", envy.Get("GO_ENV", "development")),
 		Id:        u.ID.String(),
 	}
-	c.Logger().Infof("Claims: %#v", claims)
 
 	signingKey, err := ioutil.ReadFile(envy.Get("JWT_KEY_PATH", ""))
 
@@ -199,7 +188,6 @@ func RestrictedHandlerMiddleware(next buffalo.Handler) buffalo.Handler {
 
 			// retrieving user from db
 			u, err := getUserByID(c, claims["jti"].(string))
-			c.Logger().Infof("User: %#v err %v ", u, err)
 
 			if err != nil {
 				return c.Error(http.StatusUnauthorized, fmt.Errorf("Could not identify the user"))
