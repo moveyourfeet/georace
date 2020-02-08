@@ -70,31 +70,31 @@ func UsersLogin(c buffalo.Context) error {
 	err := c.Bind(&req)
 
 	if err != nil {
-		return c.Error(http.StatusBadRequest, err)
+		return c.Error(http.StatusUnauthorized, err)
 	}
 
 	pwd := req.Password
 	if len(pwd) == 0 {
-		return c.Error(http.StatusBadRequest, errors.New("Invalid password"))
+		return c.Error(http.StatusUnauthorized, errors.New("Invalid password"))
 	}
 
 	email := req.Email
 	if checkmail.ValidateFormat(email) != nil {
-		return c.Error(http.StatusBadRequest, errors.New("Invalid email"))
+		return c.Error(http.StatusUnauthorized, errors.New("Invalid email"))
 	}
 
 	u, err := getUser(c, email)
 
 	if err != nil {
 		c.Logger().Errorf("Error :%v", err)
-		return c.Error(http.StatusBadRequest, errors.New("Login failed"))
+		return c.Error(http.StatusUnauthorized, errors.New("Login failed"))
 	}
 
 	pwdCompare := bcrypt.CompareHashAndPassword([]byte(u.PasswordHash), []byte(pwd))
 	if pwdCompare != nil {
 		c.Logger().Errorf("Error :%v", pwdCompare)
 
-		return c.Error(http.StatusBadRequest, errors.New("Login failed"))
+		return c.Error(http.StatusUnauthorized, errors.New("Login failed"))
 	}
 
 	claims := jwt.StandardClaims{
