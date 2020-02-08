@@ -17,7 +17,6 @@ import (
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/envy"
 	"github.com/gobuffalo/pop"
-	"github.com/sirupsen/logrus"
 )
 
 // UsersCreate registers a new user with the application.
@@ -183,9 +182,6 @@ func RestrictedHandlerMiddleware(next buffalo.Handler) buffalo.Handler {
 
 		// getting claims
 		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-
-			logrus.Errorf("claims: %v", claims)
-
 			// retrieving user from db
 			u, err := getUserByID(c, claims["jti"].(string))
 

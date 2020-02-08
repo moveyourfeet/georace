@@ -23,7 +23,6 @@ require (
 	github.com/markbates/grift v1.5.0
 	github.com/pkg/errors v0.9.1
 	github.com/rs/cors v1.7.0
-	github.com/sirupsen/logrus v1.4.2
 	github.com/unrolled/secure v1.0.0
 	golang.org/x/crypto v0.0.0-20200206161412-a0c6ece9d31a
 )

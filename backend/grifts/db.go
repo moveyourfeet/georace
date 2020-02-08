@@ -4,6 +4,7 @@ import (
 	"backend/models"
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 
@@ -26,6 +27,32 @@ var _ = grift.Namespace("db", func() {
 		return nil
 	})
 
+	grift.Desc("clean", "cleans a database")
+	grift.Add("clean", func(c *grift.Context) error {
+		s := read("This will clean the database!!! Are you sure? (y/N)")
+
+		if s == "y" || s == "yes" {
+
+			waypoints := &models.Waypoints{}
+			if err := models.DB.All(waypoints); err != nil {
+				return errors.WithStack(err)
+			}
+			for _, v := range *waypoints {
+				models.DB.Destroy(&v)
+			}
+
+			routes := &models.Routes{}
+			if err := models.DB.All(routes); err != nil {
+				return errors.WithStack(err)
+			}
+			for _, v := range *routes {
+				models.DB.Destroy(&v)
+
+			}
+		}
+		return nil
+	})
+
 	grift.Desc("seed", "Seeds a database")
 	grift.Add("seed", func(c *grift.Context) error {
 
@@ -40,10 +67,10 @@ var _ = grift.Namespace("db", func() {
 		}
 		_ = u2
 
-		if err := createRoute(p16GlRyeTilSletten); err != nil {
+		if err := createRoute(u1, p16GlRyeTilSletten); err != nil {
 			return errors.WithStack(err)
 		}
-		if err := createRoute(p16GruppernesDoegn); err != nil {
+		if err := createRoute(u2, p16GruppernesDoegn); err != nil {
 			return errors.WithStack(err)
 		}
 
@@ -62,10 +89,14 @@ func createUser(email string) (*models.User, error) {
 	if err != nil {
 		return nil, err
 	}
+	models.DB.Where("email = ?", email).First(user)
 	return user, nil
 }
 
-func createRoute(route *models.Route) error {
+func createRoute(u *models.User, route *models.Route) error {
+	route.User = *u
+	route.Name = u.Email + " - " + route.Name
+	log.Printf("User : %#v", u)
 	if err := models.DB.Create(route); err != nil {
 		return errors.WithStack(err)
 	}

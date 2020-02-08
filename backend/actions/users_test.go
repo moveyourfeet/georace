@@ -6,9 +6,9 @@ import (
 	"net/http"
 )
 
-func (as *ActionSuite) createUser() (*models.User, error) {
+func (as *ActionSuite) createUser(name string) (*models.User, error) {
 	u := &models.User{
-		Email:                "mark@example.com",
+		Email:                name + "@example.com",
 		Password:             "password",
 		PasswordConfirmation: "password",
 	}
@@ -54,7 +54,7 @@ func (as *ActionSuite) Test_Users_Create() {
 }
 
 func (as *ActionSuite) Test_Users_Login() {
-	u, err := as.createUser()
+	u, err := as.createUser("mark")
 	as.NoError(err)
 
 	tcases := []struct {
@@ -86,7 +86,7 @@ func (as *ActionSuite) Test_Users_Login() {
 }
 
 func (as *ActionSuite) Test_Users_Me() {
-	u, err := as.createUser()
+	u, err := as.createUser("mark")
 	as.NoError(err)
 
 	// table driven tests

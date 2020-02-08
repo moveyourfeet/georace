@@ -14,6 +14,8 @@ import (
 // Route is used by pop to map your .model.Name.Proper.Pluralize.Underscore database table to your go code.
 type Route struct {
 	ID            uuid.UUID    `json:"id" db:"id"`
+	UserID        uuid.UUID    `json:"-" db:"user_id"`
+	User          User         `json:"-" belongs_to:"user"`
 	Waypoints     Waypoints    `has_many:"waypoints" order_by:"sequence asc" json:"waypoints"`
 	Name          string       `json:"name" db:"name"`
 	Public        bool         `json:"public" db:"public"`
