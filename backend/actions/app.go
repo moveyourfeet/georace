@@ -1,6 +1,8 @@
 package actions
 
 import (
+	"net/http"
+
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/envy"
 	forcessl "github.com/gobuffalo/mw-forcessl"
@@ -38,12 +40,23 @@ var T *i18n.Translator
 // placed last in the route declarations, as it will prevent routes
 // declared after it to never be called.
 func App() *buffalo.App {
+
+	c := cors.Default().Handler
+
+	if ENV == "development" {
+		c = cors.New(cors.Options{
+			AllowedOrigins:   []string{"localhost:4200"},
+			AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodDelete},
+			AllowCredentials: true,
+		}).Handler
+	}
+
 	if app == nil {
 		app = buffalo.New(buffalo.Options{
 			Env:          ENV,
 			SessionStore: sessions.Null{},
 			PreWares: []buffalo.PreWare{
-				cors.Default().Handler,
+				c,
 			},
 			SessionName: "_backend_session",
 		})
