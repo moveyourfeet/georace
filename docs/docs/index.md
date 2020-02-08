@@ -1,0 +1,3 @@
+# GeoRace
+
+New game setup

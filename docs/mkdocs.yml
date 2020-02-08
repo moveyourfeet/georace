@@ -1,0 +1,7 @@
+site_name: GeoRace v3
+nav:
+    - Home: index.md
+    # - Frontend:
+    - Backend:
+      - Game Manager: backend/backend.md
+theme: material 
