@@ -2,18 +2,19 @@ package models
 
 import (
 	"encoding/json"
+	"time"
+
 	"github.com/gobuffalo/nulls"
 	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/validate"
 	"github.com/gobuffalo/validate/validators"
 	"github.com/gofrs/uuid"
-	"time"
 )
 
 // Route is used by pop to map your .model.Name.Proper.Pluralize.Underscore database table to your go code.
 type Route struct {
 	ID            uuid.UUID    `json:"id" db:"id"`
-	Waypoints     Waypoints    `has_many:"waypoints" order_by:"name asc"`
+	Waypoints     Waypoints    `has_many:"waypoints" order_by:"name asc" json:"waypoints"`
 	Name          string       `json:"name" db:"name"`
 	Public        bool         `json:"public" db:"public"`
 	FinishMessage nulls.String `json:"finish_message" db:"finish_message"`

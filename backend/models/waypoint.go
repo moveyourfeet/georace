@@ -2,12 +2,13 @@ package models
 
 import (
 	"encoding/json"
+	"time"
+
 	"github.com/gobuffalo/nulls"
 	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/validate"
 	"github.com/gobuffalo/validate/validators"
 	"github.com/gofrs/uuid"
-	"time"
 )
 
 // Waypoint is used by pop to map your .model.Name.Proper.Pluralize.Underscore database table to your go code.
@@ -20,6 +21,8 @@ type Waypoint struct {
 	Answer    nulls.String  `json:"answer" db:"answer"`
 	Point     nulls.Int     `json:"point" db:"point"`
 	Zoom      nulls.Float64 `json:"zoom" db:"zoom"`
+	Latitude  float64       `json:"latitude" db:"latitude"`
+	Longitude float64       `json:"longitude" db:"longitude"`
 	Maptype   nulls.String  `json:"maptype" db:"maptype"`
 	CreatedAt time.Time     `json:"created_at" db:"created_at"`
 	UpdatedAt time.Time     `json:"updated_at" db:"updated_at"`

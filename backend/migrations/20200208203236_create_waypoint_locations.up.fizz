@@ -1,0 +1,2 @@
+add_column("waypoints", "latitude", "decimal")
+add_column("waypoints", "longitude", "decimal")

@@ -1,0 +1,2 @@
+drop_column("waypoints", "latitude")
+drop_column("waypoints", "longitude")
