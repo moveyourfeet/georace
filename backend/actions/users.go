@@ -166,6 +166,7 @@ func encryptPassword(p string) string {
 func RestrictedHandlerMiddleware(next buffalo.Handler) buffalo.Handler {
 	return func(c buffalo.Context) error {
 		tokenString := c.Request().Header.Get("Authorization")
+		tokenString = strings.TrimPrefix(tokenString, "Bearer ")
 
 		if len(tokenString) == 0 {
 			return c.Error(http.StatusUnauthorized, fmt.Errorf("No token set in headers"))

@@ -65,8 +65,9 @@ func App() *buffalo.App {
 		users := api.Group("/users")
 		// restrict access to authenticated users
 		users.Use(RestrictedHandlerMiddleware)
-
 		users.GET("/me", UsersMe)
+
+		api.Resource("/waypoints", WaypointsResource{})
 	}
 
 	return app

@@ -1,0 +1,10 @@
+create_table("waypoints") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("name", "string", {})
+	t.Column("question", "text", {null: true})
+	t.Column("answer", "text", {null: true})
+	t.Column("point", "integer", {null: true})
+	t.Column("zoom", "decimal", {null: true})
+	t.Column("maptype", "text", {null: true})
+	t.Timestamps()
+}
