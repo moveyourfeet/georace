@@ -4,19 +4,22 @@
             <mat-card-title>Opret bruger</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <mat-form-field class="full-width">
+            <mat-form-field class="full-width" id="email">
                 <mat-label>E-mail</mat-label>
                 <input matInput type="email" formControlName="email" autofocus autocomplete="email" />
+                <mat-error *ngIf="registerForm.controls.email.invalid">{{errors?.email}}</mat-error>
             </mat-form-field>
 
-            <mat-form-field class="full-width">
+            <mat-form-field class="full-width" id="password">
                 <mat-label>Adgangskode</mat-label>
                 <input matInput type="password" formControlName="password" />
+                <mat-error *ngIf="registerForm.controls.password.invalid">{{errors?.password}}</mat-error>
             </mat-form-field>
 
-            <mat-form-field class="full-width">
+            <mat-form-field class="full-width" id="password_confirmation">
                 <mat-label>Gentag adgangskode</mat-label>
                 <input matInput type="password" formControlName="password_confirmation" />
+                <mat-error *ngIf="registerForm.controls.password_confirmation.invalid">{{errors?.password_confirmation}}</mat-error>
             </mat-form-field>
         </mat-card-content>
         <mat-card-actions>

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { User } from '../_models';
 import { AuthnService } from './authn.service';
-import { map, switchMap, distinctUntilChanged, publishReplay } from 'rxjs/operators';
+import { switchMap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,9 @@ export class UserService {
     password_confirmation: string): Observable<User> {
     return this.http.post<User>(
       'http://localhost:3000/v1/users',
-      { email, password, password_confirmation }).pipe();
+      { email, password, password_confirmation }).pipe(
+        catchError(err => throwError(err.error.errors))
+      );
   }
 
 }

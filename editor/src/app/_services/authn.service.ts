@@ -17,13 +17,15 @@ export class AuthnService {
   }
 
   public login(email: string, password: string): Observable<JWToken> {
-    return this.http.post<JWToken>('http://localhost:3000/v1/auth/login', { email, password })
-      .pipe(map(token => {
-        localStorage.setItem('token', JSON.stringify(token));
-        this.currentTokenSubject.next(token);
-        return token;
-      })
-    );
+    return this.http.post<JWToken>(
+      'http://localhost:3000/v1/auth/login',
+      { email, password }).pipe(
+        map(token => {
+          localStorage.setItem('token', JSON.stringify(token));
+          this.currentTokenSubject.next(token);
+          return token;
+        })
+      );
   }
 
   public get currentTokenValue(): JWToken {

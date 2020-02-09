@@ -47,6 +47,19 @@ describe('UserService', () => {
     });
   });
 
+  it('should handle create user failure', () => {
+    service.create('m@i.l', 'passw0rd', 'password').subscribe(
+      data => fail('no data expected'),
+      error => expect(error.email[0]).toEqual('mail error')
+    );
+
+    const req = httpTestingController.expectOne('http://localhost:3000/v1/users');
+    expect(req.request.method).toEqual('POST');
+    req.flush(
+      { errors: { email: ['mail error'] } },
+      { status: 400, statusText: 'Bad Request' });
+  });
+
   it('should get user', () => {
     service.currentUser.subscribe(
       data => expect(data.email).toEqual('m@i.l')

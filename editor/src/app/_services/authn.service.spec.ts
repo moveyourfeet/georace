@@ -45,19 +45,21 @@ describe('AuthnService', () => {
     expect(service.authenticated).toBeTrue();
   });
 
-  // TODO: This test makes the suite fail randomly...
-  /*it('should not set token if login fails', () => {
+  it('should not set token if login fails', () => {
     expect(service.currentTokenValue).toBeNull();
 
     service.login('m@i.l', 'passw0rd').subscribe(
-      data => fail('should fail with 400')
+      data => fail('no data expected'),
+      error => expect(error.error.error).toEqual('Login failed')
     );
 
     const req = httpTestingController.expectOne('http://localhost:3000/v1/auth/login');
     expect(req.request.method).toEqual('POST');
-    req.flush('test message', { status: 400, statusText: 'Mock Request' });
+    req.flush(
+      { error: 'Login failed' },
+      { status: 401, statusText: 'Unauthorized' });
 
     expect(service.currentTokenValue).toBeNull();
     expect(localStorage.getItem('token')).toBeNull();
-  });*/
+  });
 });

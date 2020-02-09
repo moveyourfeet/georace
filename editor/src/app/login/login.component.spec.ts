@@ -74,7 +74,6 @@ describe('LoginComponent', () => {
 
   it('should show error if login fails', () => {
     loginSpy.and.returnValue(throwError('Login failed'));
-    snackBarSpy.and.callThrough();
 
     updateForm('m@i.l', 'password');
     component.onSubmit();
@@ -83,7 +82,7 @@ describe('LoginComponent', () => {
     expect(snackBarSpy).toHaveBeenCalled();
   });
 
-  function updateForm(email, password) {
+  function updateForm(email: string, password: string) {
     component.loginForm.controls.email.setValue(email);
     component.loginForm.controls.password.setValue(password);
     fixture.detectChanges();
