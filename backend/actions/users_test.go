@@ -22,27 +22,32 @@ func (as *ActionSuite) createUser(name string) (*models.User, error) {
 func (as *ActionSuite) Test_Users_Create() {
 
 	tcases := []struct {
-		Email      string
-		Password   string
-		Status     int
-		Identifier string
+		Email                string
+		Password             string
+		PasswordConfirmation string
+		Status               int
+		Identifier           string
 	}{
-		{"noexist@example.com", "password", http.StatusOK, "New User"},
-		{"noexist@..@", "password", http.StatusBadRequest, "Invalid email"},
-		{"noexist2@example.com", "", http.StatusBadRequest, "Password Missing"},
+		{"noexist@example.com", "password", "password", http.StatusOK, "New User"},
+		{"noexist@..@", "password", "password", http.StatusBadRequest, "is not a valid email"},
+		{"noexist2@example.com", "", "", http.StatusBadRequest, "Password can not be blank."},
+		{"noexist3@example.com", "password", "passw0rd", http.StatusBadRequest, "Password does not match confirmation"},
 	}
 
 	for _, tcase := range tcases {
 		as.Run(tcase.Identifier, func() {
-			res := as.JSON("/v1/users").Post(LoginRequest{
-				Email:    tcase.Email,
-				Password: tcase.Password,
+			res := as.JSON("/v1/users").Post(NewUserRequest{
+				Email:                tcase.Email,
+				Password:             tcase.Password,
+				PasswordConfirmation: tcase.PasswordConfirmation,
 			})
 
 			as.Equal(tcase.Status, res.Code)
 			body := res.Body.String()
 
 			if tcase.Status == http.StatusBadRequest {
+				as.Contains(body, tcase.Identifier)
+
 				as.Contains(body, "error")
 				return
 			}

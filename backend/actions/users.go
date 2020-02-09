@@ -19,9 +19,16 @@ import (
 	"github.com/gobuffalo/pop"
 )
 
+// NewUserRequest represents a new user.
+type NewUserRequest struct {
+	Email                string `json:"email"`
+	Password             string `json:"password"`
+	PasswordConfirmation string `json:"password_confirmation"`
+}
+
 // UsersCreate registers a new user with the application.
 func UsersCreate(c buffalo.Context) error {
-	u := &LoginRequest{}
+	u := &NewUserRequest{}
 	if err := c.Bind(u); err != nil {
 		return errors.WithStack(err)
 	}
@@ -29,7 +36,7 @@ func UsersCreate(c buffalo.Context) error {
 	user := &models.User{
 		Email:                u.Email,
 		Password:             u.Password,
-		PasswordConfirmation: u.Password,
+		PasswordConfirmation: u.PasswordConfirmation,
 	}
 
 	tx := c.Value("tx").(*pop.Connection)
