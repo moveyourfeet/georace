@@ -16,19 +16,19 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private _snackBar: MatSnackBar,
+    private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router,
     private authnService: AuthnService,
   ) {
-    if (this.authnService.currentTokenValue) {
+    if (this.authnService.authenticated) {
       this.router.navigate(['/']);
     }
   }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
 
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate([this.returnUrl]);
         },
         error => {
-          this._snackBar.open('Ugyldigt brugernavn eller adgangskode!', null, {
+          this.snackBar.open('Ugyldigt brugernavn eller adgangskode!', null, {
             duration: 5000, // seconds
           });
         }

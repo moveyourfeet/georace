@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private _snackBar: MatSnackBar,
+    private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router,
     private authnService: AuthnService,
@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       password_confirmation: ['', Validators.required],
     });
@@ -48,18 +48,18 @@ export class RegisterComponent implements OnInit {
       this.f.password.value,
       this.f.password_confirmation.value).pipe(first()).subscribe(
         data => {
-          this.snackbar(`Bruger oprettet ${data.email}`);
+          this.openSnackBar(`Bruger oprettet ${data.email}`);
           this.router.navigate(['login']);
         },
         error => {
-          this.snackbar(JSON.stringify(error.error.errors));
+          this.openSnackBar(JSON.stringify(error.error.errors));
         }
       );
   }
 
-  private snackbar(message: string) {
-    this._snackBar.dismiss();
-    this._snackBar.open(message, null, {
+  private openSnackBar(message: string) {
+    this.snackBar.dismiss();
+    this.snackBar.open(message, null, {
       duration: 5000, // seconds
     });
   }
