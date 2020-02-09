@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'editor'`, () => {
+  it(`should have as title 'Georace'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('editor');
+    expect(app.title).toEqual('Georace');
   });
 
-  it('should render title', () => {
+  it('should contain router outlet', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('editor app is running!');
+    expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
 });

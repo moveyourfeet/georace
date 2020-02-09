@@ -1,0 +1,26 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <mat-card class="register-form">
+        <mat-card-header>
+            <mat-card-title>Opret bruger</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-form-field class="full-width">
+                <mat-label>E-mail</mat-label>
+                <input matInput type="email" formControlName="email" autofocus autocomplete="email" />
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Adgangskode</mat-label>
+                <input matInput type="password" formControlName="password" />
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Gentag adgangskode</mat-label>
+                <input matInput type="password" formControlName="password_confirmation" />
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-flat-button color="primary">Opret bruger</button>
+        </mat-card-actions>
+    </mat-card>
+</form>

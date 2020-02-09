@@ -1,0 +1,3 @@
+
+<a *ngIf="!authenticated" mat-button routerLink="/login">Log ind</a>
+<span *ngIf="authenticated">{{email|async}}</span>
