@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { JWToken } from '../_models';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class AuthnService {
 
   public login(email: string, password: string): Observable<JWToken> {
     return this.http.post<JWToken>(
-      'http://localhost:3000/v1/auth/login',
+      `${environment.apiUrl}/auth/login`,
       { email, password }).pipe(
         map(token => {
           localStorage.setItem('token', JSON.stringify(token));

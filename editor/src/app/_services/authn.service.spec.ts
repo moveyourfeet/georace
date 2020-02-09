@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AuthnService } from './authn.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 describe('AuthnService', () => {
   let service: AuthnService;
@@ -35,7 +36,7 @@ describe('AuthnService', () => {
       data => expect(data.token).toEqual('some.JWT.token')
     );
 
-    const req = httpTestingController.expectOne('http://localhost:3000/v1/auth/login');
+    const req = httpTestingController.expectOne(`${environment.apiUrl}/auth/login`);
     expect(req.request.method).toEqual('POST');
     req.flush({token: 'some.JWT.token'});
 
@@ -53,7 +54,7 @@ describe('AuthnService', () => {
       error => expect(error.error.error).toEqual('Login failed')
     );
 
-    const req = httpTestingController.expectOne('http://localhost:3000/v1/auth/login');
+    const req = httpTestingController.expectOne(`${environment.apiUrl}/auth/login`);
     expect(req.request.method).toEqual('POST');
     req.flush(
       { error: 'Login failed' },

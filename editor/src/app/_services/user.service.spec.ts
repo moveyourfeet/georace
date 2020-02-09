@@ -4,6 +4,7 @@ import { UserService } from './user.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { AuthnService } from './authn.service';
+import { environment } from 'src/environments/environment';
 
 describe('UserService', () => {
   let service: UserService;
@@ -37,7 +38,7 @@ describe('UserService', () => {
       data => expect(data.email).toEqual('m@i.l')
     );
 
-    const req = httpTestingController.expectOne('http://localhost:3000/v1/users');
+    const req = httpTestingController.expectOne(`${environment.apiUrl}/users`);
     expect(req.request.method).toEqual('POST');
     req.flush({
       id: 'de5d9442-273b-404a-aa64-aa59c2b164e4',
@@ -53,7 +54,7 @@ describe('UserService', () => {
       error => expect(error.email[0]).toEqual('mail error')
     );
 
-    const req = httpTestingController.expectOne('http://localhost:3000/v1/users');
+    const req = httpTestingController.expectOne(`${environment.apiUrl}/users`);
     expect(req.request.method).toEqual('POST');
     req.flush(
       { errors: { email: ['mail error'] } },
@@ -65,7 +66,7 @@ describe('UserService', () => {
       data => expect(data.email).toEqual('m@i.l')
     );
 
-    const req = httpTestingController.expectOne('http://localhost:3000/v1/users/me');
+    const req = httpTestingController.expectOne(`${environment.apiUrl}/users/me`);
     expect(req.request.method).toEqual('GET');
     req.flush({
       id: 'de5d9442-273b-404a-aa64-aa59c2b164e4',
