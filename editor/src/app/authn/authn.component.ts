@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthnService, UserService } from '../_services';
-import { Observable, ObjectUnsubscribedError, Subscription } from 'rxjs';
-import { User } from '../_models';
-import { map, pluck } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { pluck } from 'rxjs/operators';
 
 @Component({
   selector: 'app-authn',
@@ -22,6 +21,6 @@ export class AuthnComponent implements OnInit {
   }
 
   public get authenticated(): boolean {
-    return !!this.authnService.currentTokenValue;
+    return this.authnService.authenticated;
   }
 }

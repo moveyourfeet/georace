@@ -22,11 +22,17 @@ export class AuthnService {
         localStorage.setItem('token', JSON.stringify(token));
         this.currentTokenSubject.next(token);
         return token;
-      }));
+      })
+    );
   }
 
   public get currentTokenValue(): JWToken {
     return this.currentTokenSubject.value;
+  }
+
+  public get authenticated(): boolean {
+    const token = this.currentTokenValue;
+    return !!(token && token.token);
   }
 
 }

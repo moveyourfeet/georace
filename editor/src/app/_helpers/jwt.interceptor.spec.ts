@@ -5,8 +5,8 @@ import { JwtInterceptor } from './jwt.interceptor';
 import { AuthnService } from '../_services';
 
 describe('JwtInterceptor', () => {
-  const mockAuthnService = {
-    currentTokenValue: { token: 'some.JWT.token' }
+  const mockAuthnService: Partial<AuthnService> = {
+    currentTokenValue: { token: 'set this in test' }
   };
 
   beforeEach(() => {

@@ -29,6 +29,7 @@ describe('AuthnService', () => {
 
   it('should set token on successful login', () => {
     expect(service.currentTokenValue).toBeNull();
+    expect(service.authenticated).toBeFalse();
 
     service.login('m@i.l', 'passw0rd').subscribe(
       data => expect(data.token).toEqual('some.JWT.token')
@@ -40,6 +41,8 @@ describe('AuthnService', () => {
 
     expect(service.currentTokenValue.token).toEqual('some.JWT.token');
     expect(localStorage.getItem('token')).toEqual(JSON.stringify({token: 'some.JWT.token'}));
+
+    expect(service.authenticated).toBeTrue();
   });
 
   // TODO: This test makes the suite fail randomly...

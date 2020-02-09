@@ -8,7 +8,7 @@ import { AuthnService } from './authn.service';
 describe('UserService', () => {
   let service: UserService;
   let httpTestingController: HttpTestingController;
-  const mockAuthnService = {
+  const mockAuthnService: Partial<AuthnService> = {
     currentToken: of({token: 'some.JWT.token'})
   };
 
