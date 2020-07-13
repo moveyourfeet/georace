@@ -15,7 +15,7 @@ services:
       - "3000:3000"
     environment:
       VIRTUAL_HOST: backend.localtest.me
-      GO_ENV: test
+      GO_ENV: development
       DB_DATABASE: postgres
       DB_HOST: db
       DB_PORT: 5432

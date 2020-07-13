@@ -47,7 +47,7 @@ func App() *buffalo.App {
 			SessionName: "_backend_session",
 		})
 
-		if ENV == "development" {
+		if ENV == "development" || ENV == "test" {
 			app.PreWares = []buffalo.PreWare{cors.New(cors.Options{
 				AllowedOrigins:   []string{"*"},
 				AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
