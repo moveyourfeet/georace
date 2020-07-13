@@ -14,7 +14,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./dev-key.key:/tmp/dev-key.key:ro
+      - ./backend/dev-key.key:/tmp/dev-key.key:ro
     environment:
       JWT_KEY_PATH: /tmp/dev-key.key
       VIRTUAL_HOST: backend.localtest.me
