@@ -2,6 +2,7 @@ package actions
 
 import (
 	"github.com/gobuffalo/buffalo"
+	"github.com/gobuffalo/buffalo-pop/v2/pop/popmw"
 	"github.com/gobuffalo/envy"
 	forcessl "github.com/gobuffalo/mw-forcessl"
 	i18n "github.com/gobuffalo/mw-i18n"
@@ -10,7 +11,6 @@ import (
 
 	"backend/models"
 
-	"github.com/gobuffalo/buffalo-pop/pop/popmw"
 	contenttype "github.com/gobuffalo/mw-contenttype"
 	"github.com/gobuffalo/x/sessions"
 	"github.com/rs/cors"

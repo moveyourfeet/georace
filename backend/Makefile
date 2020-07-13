@@ -8,7 +8,7 @@ db: ## build docker image
 	buffalo db migrate up 
 
 docker-build: ## build docker image
-	docker build -t georace:now 
+	docker build -t georace:now  .
 
 test-coverage: ## Generate test coverage report
 	mkdir -p tmp

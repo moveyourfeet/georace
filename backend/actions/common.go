@@ -5,7 +5,7 @@ import (
 	"errors"
 
 	"github.com/gobuffalo/buffalo"
-	"github.com/gobuffalo/pop"
+	"github.com/gobuffalo/pop/v5"
 )
 
 func scope(c buffalo.Context) *pop.Query {

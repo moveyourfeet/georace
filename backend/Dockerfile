@@ -1,6 +1,6 @@
 # This is a multi-stage Dockerfile and requires >= Docker 17.05
 # https://docs.docker.com/engine/userguide/eng-image/multistage-build/
-FROM gobuffalo/buffalo:v0.15.5 as builder
+FROM gobuffalo/buffalo:v0.16.10 as builder
 
 RUN mkdir -p $GOPATH/src/georace
 WORKDIR $GOPATH/src/georace

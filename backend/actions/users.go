@@ -16,7 +16,7 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/envy"
-	"github.com/gobuffalo/pop"
+	"github.com/gobuffalo/pop/v5"
 )
 
 // NewUserRequest represents a new user.
