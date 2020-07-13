@@ -73,7 +73,7 @@ export class RegisterComponent implements OnInit {
   private openSnackBar(message: string) {
     this.snackBar.dismiss();
     this.snackBar.open(message, null, {
-      duration: 5000, // seconds
+      duration: 5000, // miliseconds
     });
   }
 }

@@ -51,8 +51,16 @@ export class LoginComponent implements OnInit {
           this.router.navigate([this.returnUrl]);
         },
         error => {
-          this.snackBar.open('Ugyldigt brugernavn eller adgangskode!', null, {
-            duration: 5000, // seconds
+          let message: string;
+          if (error.status < 100) {
+            message = 'Kan ikke forbinde til server!';
+          } else if (error.status >= 500) {
+            message = 'Fejl på serveren!';
+          } else {
+            message = 'Ugyldigt brugernavn eller adgangskode!';
+          }
+          this.snackBar.open(message, null, {
+            duration: 5000, // miliseconds
           });
         }
       );
