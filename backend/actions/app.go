@@ -50,7 +50,7 @@ func App() *buffalo.App {
 		if ENV == "development" || ENV == "test" {
 			app.PreWares = []buffalo.PreWare{cors.New(cors.Options{
 				AllowedOrigins:   []string{"*"},
-				AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
+				AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 				AllowedHeaders:   []string{"Content-Type", "Cookie", "Authorization"},
 				AllowCredentials: true,
 				Debug:            true,
