@@ -5,18 +5,22 @@ FROM gobuffalo/buffalo:v0.16.10 as builder
 RUN mkdir -p $GOPATH/src/georace
 WORKDIR $GOPATH/src/georace
 
-ADD . .
+ADD go.mod .
+ADD go.sum .
 ENV GO111MODULES=on
 RUN go get ./...
+ADD . .
 RUN buffalo build --static -o /bin/app
 
 FROM alpine
-RUN apk add --no-cache bash
+RUN apk add --no-cache bash curl
 RUN apk add --no-cache ca-certificates
 
 WORKDIR /bin/
 
 COPY --from=builder /bin/app .
+COPY scripts/wait-for-postgres.sh .
+COPY database.yml .
 
 # Uncomment to run the binary in "production" mode:
 # ENV GO_ENV=production
@@ -26,6 +30,4 @@ ENV ADDR=0.0.0.0
 
 EXPOSE 3000
 
-# Uncomment to run the migrations before running the binary:
-# CMD /bin/app migrate; /bin/app
-CMD exec /bin/app
+CMD ./wait-for-postgres.sh ; /bin/app migrate; /bin/app
