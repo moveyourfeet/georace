@@ -1,4 +1,9 @@
-<p>home works!</p>
+
+<ul>
+    <li *ngFor="let route of routes | async; trackBy: route?.id">
+        <a [routerLink]="['/route', route.id]">{{route.name}}</a>
+    </li>
+</ul>
 
 <button mat-fab color="primary" aria-label="Ny rute" routerLink="/route">
     <mat-icon>add</mat-icon>
