@@ -39,7 +39,6 @@ describe('HomeComponent', () => {
     component.ngOnInit();
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    console.log(compiled);
     expect(compiled.querySelector('ul > li:first-child > a').textContent).toContain('dummy');
     expect(spy).toHaveBeenCalled();
   });

@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { RouteService } from './route.service';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
-import { Route } from '../_models';
 import { environment } from 'src/environments/environment';
 
 describe('RouteService', () => {
