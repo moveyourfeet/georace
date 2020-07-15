@@ -29,7 +29,7 @@ describe('RouteService', () => {
       }
     );
 
-    const req = httpTestingController.expectOne(`${environment.apiUrl}/routes`);
+    const req = httpTestingController.expectOne(`${environment.apiUrl}/routes/`);
     expect(req.request.method).toEqual('GET');
     req.flush([{
       id: 'de5d9442-273b-404a-aa64-aa59c2b164e4',
@@ -37,5 +37,24 @@ describe('RouteService', () => {
       updated_at: '2020-02-08T16:34:19.437238Z',
       name: 'dummy',
     }]);
+  });
+
+  it('should return route', () => {
+    service.show('de5d9442-273b-404a-aa64-aa59c2b164e4').subscribe(
+      route => {
+        expect(route).toBeTruthy();
+        expect(route.id).toEqual('de5d9442-273b-404a-aa64-aa59c2b164e4');
+        expect(route.name).toEqual('dummy');
+      }
+    );
+
+    const req = httpTestingController.expectOne(`${environment.apiUrl}/routes/de5d9442-273b-404a-aa64-aa59c2b164e4/`);
+    expect(req.request.method).toEqual('GET');
+    req.flush({
+      id: 'de5d9442-273b-404a-aa64-aa59c2b164e4',
+      created_at: '2020-02-08T16:34:19.437229Z',
+      updated_at: '2020-02-08T16:34:19.437238Z',
+      name: 'dummy',
+    });
   });
 });

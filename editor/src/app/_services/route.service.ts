@@ -10,12 +10,18 @@ import { environment } from 'src/environments/environment';
 export class RouteService {
 
   constructor(
-    private http: HttpClient,
+    private readonly http: HttpClient,
   ) { }
 
   public list(): Observable<Route[]> {
     return this.http.get<Route[]>(
-      `${environment.apiUrl}/routes`,
+      `${environment.apiUrl}/routes/`,
+    );
+  }
+
+  public show(id: string): Observable<Route> {
+    return this.http.get<Route>(
+      `${environment.apiUrl}/routes/${id}/`
     );
   }
 }
